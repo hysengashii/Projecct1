@@ -30,7 +30,7 @@ Route::get('/cart', function () {
 
 Route::resource('slides', SlidesController::class);
 Route::resource('products', ProductsController::class);
-Route::resource('orders', OrdersController::class)->only(['index,destroy']);
+Route::resource('orders', OrdersController::class)->only(['index','destroy']);
 
 
 Route::middleware([

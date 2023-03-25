@@ -13,7 +13,7 @@ class SlidesController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.slides.index');
     }
 
     /**
