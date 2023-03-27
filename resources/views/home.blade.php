@@ -13,7 +13,7 @@
                             <img src="{{ asset('storage/slides/'.$slide->image) }}" class="d-block w-100" alt="{{ $slide->title}}">
                             <div class="carousel-caption d-none d-md-block">
                             <h5>{{ $slide->title }}</h5>
-                            <p>{{ $slide->subtitle }}</p>
+                            <p>{{ $slide->subtitle }}</p><p></p>
                             </div>
                         </div>
                     @endforeach
