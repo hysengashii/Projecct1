@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Slide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SlidesController extends Controller
 {
@@ -13,7 +16,8 @@ class SlidesController extends Controller
      */
     public function index()
     {
-        return view('dashboard.slides.index');
+        $slides = Slide::all();
+        return view('dashboard.slides.index',compact('slides'));
     }
 
     /**
@@ -23,7 +27,8 @@ class SlidesController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('dashboard.slides.create');
     }
 
     /**
@@ -34,7 +39,30 @@ class SlidesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'subtitle'=>'required'
+        ]);
+
+        $data = $request->only(['title','subtitle']);
+        $data['user_id'] = Auth::id();
+
+        if($request->hasfile('image')){
+            // rename
+            $file = $request['image']->getClientOriginalName();
+            $name = pathinfo($file,PATHINFO_FILENAME);
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $image = time().'-'.$name.'.'.$ext;
+
+            Storage::putFileAs('public/slides/',$request['image'],$image);
+            $data['image'] = $image;
+        }
+
+        if(Slide::create($data)){
+            return redirect()->route('slides.index')->with('status','Slide was created success.');
+        }
+
+        return redirect()->back()->with('status','Something want wrong.');
     }
 
     /**
@@ -56,7 +84,8 @@ class SlidesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $slide = Slide::findOrFail($id);
+        return view('dashboard.slides.edit',compact('slide'));
     }
 
     /**
@@ -68,7 +97,35 @@ class SlidesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'subtitle' => 'required'
+        ]);
+
+        $data = $request->only(['title', 'subtitle']);
+
+        $slide = Slide::findOrFail($id);
+
+        if($request->hasfile('image')) {
+            // rename
+            $file = $request['image']->getClientOriginalName();
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $image = time().'-'.$name.'.'.$ext;
+
+            Storage::delete($slide->image);
+            Storage::putFileAs('public/slides/', $request['image'], $image);
+            $slide->image = $image;
+        }
+
+        $slide->title = $request->title;
+        $slide->subtitle = $request->subtitle;
+
+        if($slide->save()) {
+            return redirect()->route('slides.index')->with('status', 'Slide was updated successfully.');
+        }
+
+        return redirect()->back()->with('status', 'Something want wrong!');
     }
 
     /**
@@ -79,6 +136,18 @@ class SlidesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $slide = Slide::findOrFail($id);
+
+        // Delete the slide's image from storage
+        if (Storage::delete('public/slides/' . $slide->image)) {
+            // Delete the slide's record from the database
+            if ($slide->delete()) {
+                return redirect()->route('slides.index')->with('status', 'Slide was deleted successfully.');
+            } else {
+                return redirect()->back()->with('status', 'Failed to delete slide from database.');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Failed to delete slide image from storage.');
+        }
     }
 }

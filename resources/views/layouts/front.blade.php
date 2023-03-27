@@ -42,7 +42,7 @@
 
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }}" href="{{ route('/dashboard') }}">Dashboard</a>
+                                    <a class="nav-link {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                                 </li>
                             @else
                             <li class="nav-item">

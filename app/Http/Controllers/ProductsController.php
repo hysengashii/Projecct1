@@ -13,7 +13,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.products.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.products.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('dashboard.products.edit');
     }
 
     /**

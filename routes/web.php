@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\ProductsController;
+use App\Models\Slide;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,8 @@ use App\Http\Controllers\ProductsController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $slides = Slide::get();
+    return view('home', compact('slides'));
 })->name('home');
 
 Route::get('/shop', function () {

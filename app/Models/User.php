@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Order;
+use App\Models\Slide;
+use App\Models\Product;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
@@ -60,4 +63,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function slides(){
+        return $this->hasMany(Slide::class);
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }
