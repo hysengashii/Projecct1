@@ -9,7 +9,7 @@
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
                 <div class="carousel-inner">
                     @foreach ($slides as $slide )
-                        <div class="carousel-item active">
+                    <div class="carousel-item active">
                             <img src="{{ asset('storage/slides/'.$slide->image) }}" class="d-block w-100" alt="{{ $slide->title}}">
                             <div class="carousel-caption d-none d-md-block">
                             <h5>{{ $slide->title }}</h5>
