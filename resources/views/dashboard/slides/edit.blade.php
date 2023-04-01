@@ -42,6 +42,9 @@
 
                                 <span>Current Img</span>
                                 <img src="{{ asset('storage/slides/'.$slide->image) }}" width="250px" alt="{{ $slide->title }}">
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this photo?')">
+                                    <i class="fas fa-trash"></i> <!-- Add the icon for deleting the photo here -->dsad
+                                  </button>
 
                             <div class="mb-4">
                                 <label class="block mb-2 font-medium" for="product-image">Current Image</label>

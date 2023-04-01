@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Order;
+use App\Models\Slide;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\ProductsController;
-use App\Models\Slide;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,10 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $slides = Slide::count();
+        $products = Product::count();
+        $orders = Order::count();
+        return view('dashboard',
+         compact('products','slides','orders'));
     })->name('dashboard');
 });

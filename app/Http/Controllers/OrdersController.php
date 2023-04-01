@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -13,7 +14,8 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('dashboard.orders.index');
+        $orders = Order::all();
+        return view('dashboard.orders.index',compact('orders'));
     }
 
     /**
@@ -56,7 +58,9 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('dashboard.orders.index', compact('order'));
     }
 
     /**
@@ -79,6 +83,9 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return redirect()->back()->with('success', 'Order deleted successfully.');
     }
 }

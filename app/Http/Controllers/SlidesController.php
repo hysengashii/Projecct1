@@ -113,7 +113,9 @@ class SlidesController extends Controller
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             $image = time().'-'.$name.'.'.$ext;
 
+            //old photo delete
             Storage::delete($slide->image);
+            //upload new photo
             Storage::putFileAs('public/slides/', $request['image'], $image);
             $slide->image = $image;
         }
