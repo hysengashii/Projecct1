@@ -21,11 +21,13 @@ use App\Http\Controllers\ProductsController;
 
 Route::get('/', function () {
     $slides = Slide::get();
-    return view('home', compact('slides'));
+    $products = Product::take(4)->get();
+    return view('home', compact('slides','products'));
 })->name('home');
 
 Route::get('/shop', function () {
-    return view('shop');
+    $products = Product::paginate(2);
+    return view('shop',compact('products'));
 })->name('shop');
 
 Route::get('/cart', function () {

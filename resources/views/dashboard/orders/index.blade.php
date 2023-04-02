@@ -18,7 +18,8 @@
                                 <th class="px-6 py-4 text-sm font-medium text-left text-gray-900">Fullname</th>
                                 <th class="px-6 py-4 text-sm font-medium text-left text-gray-900">Email</th>
                                 <th class="px-6 py-4 text-sm font-medium text-left text-gray-900">Phone</th>
-                                <th class="px-6 py-4 text-sm font-medium text-left text-gray-900 ">Edit</th>
+                                <th class="px-6 py-4 text-sm font-medium text-left text-gray-900 ">Total</th>
+                                <th class="px-6 py-4 text-sm font-medium text-left text-gray-900 ">Approve</th>
                                 <th class="px-6 py-4 text-sm font-medium text-left text-gray-900 ">Delete</th>
                             </tr>
                         </thead>
@@ -29,6 +30,7 @@
                                     <td class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ $order->fullname }}</td>
                                     <td  class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ $order->email }}</td>
                                     <td  class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ $order->phone }}
+                                    <td  class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ number_format($order->total, 2, ) }}
                                     <td > <a class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="{{ route('orders.index', $order) }}"> Edit</a></td>
                                     <td>
                                 <form  action="{{ route('orders.destroy', $order) }}" method="POST" onsubmit="return confirm('Are you sure?')">

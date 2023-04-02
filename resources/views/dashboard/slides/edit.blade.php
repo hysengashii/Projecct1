@@ -50,6 +50,11 @@
                                 <label class="block mb-2 font-medium" for="product-image">Current Image</label>
                                 <input class="w-full p-2 border border-gray-400" value="{{ $slide->image }}" type="file" id="product-image" name="image" accept="image/*">
                             </div>
+                            <form  action="{{ route('slides.destroy', $slide) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                            </form>
 
                         <!-- <button type="submit">Update</button> -->
                         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
