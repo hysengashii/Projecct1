@@ -152,4 +152,16 @@ class SlidesController extends Controller
             return redirect()->back()->with('status', 'Failed to delete slide image from storage.');
         }
     }
+
+    public function destroyPhoto(Slide $slide)
+    {
+    // Delete the photo file from the disk
+    Storage::delete('public/slides/' . $slide->image);
+
+    // Update the slide record in the database to remove the photo
+    $slide->image->update(['photo' => null]);
+
+    // Redirect to the index page with a success message
+    return redirect()->route('slides.edit')->with('success', 'Slide photo deleted successfully.');
+    }
 }

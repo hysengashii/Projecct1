@@ -3,7 +3,9 @@
 use App\Models\Order;
 use App\Models\Slide;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\ProductsController;
@@ -25,14 +27,14 @@ Route::get('/', function () {
     return view('home', compact('slides','products'));
 })->name('home');
 
-Route::get('/shop', function () {
-    $products = Product::paginate(2);
-    return view('shop',compact('products'));
-})->name('shop');
+Route::delete('/slides/{slide}/image/{image}', [SlidesController::class, 'destroyPhoto'])->name('slides.destroyPhoto');
+
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
 Route::get('/cart', function () {
     return view('cart');
 })->name('cart');
+
 
 Route::resource('slides', SlidesController::class);
 Route::resource('products', ProductsController::class);

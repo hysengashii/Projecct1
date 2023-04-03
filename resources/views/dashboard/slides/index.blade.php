@@ -13,9 +13,8 @@
                         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
 
-                                <button type="button"class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    <a href="{{ route('slides.create') }}">Create slide </a>
-                                </button>
+                                <a href="{{ route('slides.create') }}"><button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700">Creat Product</button></a>
+
                             <table class="w-full">
                                     <thead class="bg-white border-b">
                                     @if($slides && count($slides) > 0)
@@ -37,13 +36,14 @@
                                                 <img src="{{ asset('storage/slides/'.$slide->image) }}" width="250px" alt="{{ $slide->title }}">
                                                 </td>
                                                 <td class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ $slide->subtitle }}</td>
-                                                <td > <a class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="{{ route('slides.edit', $slide) }}"> Edit</a></td>
+                                                <td > <a class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700" href="{{ route('slides.edit', $slide) }}"> Edit</a></td>
                                                 <td>
-                                            <form  action="{{ route('slides.destroy', $slide) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                                            </form></td>
+                                                    <form  action="{{ route('slides.destroy', $slide) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"  class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-red-800  dark:bg-red-600 dark:hover:bg-red-700">Delete</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
