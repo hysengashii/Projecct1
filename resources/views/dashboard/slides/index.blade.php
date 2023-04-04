@@ -13,7 +13,7 @@
                         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
 
-                                <a href="{{ route('slides.create') }}"><button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700">Creat Product</button></a>
+                                <a href="{{ route('slides.create') }}"><button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700">Creat Product</button></a>
 
                             <table class="w-full">
                                     <thead class="bg-white border-b">
@@ -36,12 +36,12 @@
                                                 <img src="{{ asset('storage/slides/'.$slide->image) }}" width="250px" alt="{{ $slide->title }}">
                                                 </td>
                                                 <td class="px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap">{{ $slide->subtitle }}</td>
-                                                <td > <a class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700" href="{{ route('slides.edit', $slide) }}"> Edit</a></td>
+                                                <td > <a class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700" href="{{ route('slides.edit', $slide) }}"> Edit</a></td>
                                                 <td>
                                                     <form  action="{{ route('slides.destroy', $slide) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"  class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-red-800  dark:bg-red-600 dark:hover:bg-red-700">Delete</button>
+                                                            <button type="submit"  class="px-5 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -51,6 +51,16 @@
                                         @else
                                         <p>0 Slides</p>
                                         @endif
+                                        <button type="button" class="btn btn-primary">Primary</button>
+                                        <button type="button" class="btn btn-secondary">Secondary</button>
+                                        <button type="button" class="btn btn-success">Success</button>
+                                        <button type="button" class="btn btn-danger">Danger</button>
+                                        <button type="button" class="btn btn-warning">Warning</button>
+                                        <button type="button" class="btn btn-info">Info</button>
+                                        <button type="button" class="btn btn-light">Light</button>
+                                        <button type="button" class="btn btn-dark">Dark</button>
+
+                                        <button type="button" class="btn btn-link">Link</button>
                         </div>
                         </div>
                     </div>
