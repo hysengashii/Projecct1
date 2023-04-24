@@ -9,17 +9,17 @@
         <div class="row">
             <div class="col-lg-7 col-md-7 col-sm-12">
                 <form action="{{ route('shop')}}" method="get">
-                    <input type="search" name="search" id="search" placeholder="Search" class="form-control" required @if(Request::get('search')) value="{{ Request::get('search')}}" @endif>
+                    <input type="search" name="search" id="search" placeholder="Search" class="form-control" required value="{{ request('search') }}">
                 </form>
             </div>
             <div class="offset-lg-1 offset-md-1 offset-sm-0 col-lg-4 col-md-4 col-sm-12">
-                <form action="{{ route('shop')}}" method="get">
+                <form action="{{ route('shop')}}" method="GET">
                     <select name="sort" id="sort" class="form-control" required>
                         <option value="">Sort by</option>
-                        <option value="name_asc">Name A-Z</option>
-                        <option value="name_desc">Name Z-A</option>
-                        <option value="price_asc">Price L-H</option>
-                        <option value="price_asc">Price H-L</option>
+                        <option value="name_asc"{{ request('sort') == 'name_asc' ? ' selected' : '' }}>Name (A-Z)</option>
+                        <option value="name_desc"{{ request('sort') == 'name_desc' ? ' selected' : '' }}>Name (Z-A)</option>
+                        <option value="price_asc"{{ request('sort') == 'price_asc' ? ' selected' : '' }}>Price (Low to High)</option>
+                        <option value="price_desc"{{ request('sort') == 'price_desc' ? ' selected' : '' }}>Price (High to Low)</option>
                     </select>
                 </form>
             </div>
@@ -27,12 +27,7 @@
     </div>
 </section>
 
-
-
-
-
         {{-- products --}}
-
         <section class="p-5 products">
             <div class="container">
                 <h2 class="mx-auto text-center">Latest Product</h2>
@@ -52,7 +47,7 @@
                                 </div>
 
                                 <div class="text-center ">
-                                    <a href="#" class="btn btn-primary ">View Productt</a>
+                                    <a href="{{ route('products.show', $product)}}" class="btn btn-primary ">View Productt</a>
                                 </div>
                                 </div>
                             </div>
@@ -70,11 +65,14 @@
                 </div>
             </div>
         </section>
-
-
-
 @endsection
 
+
+@section('js')
+        document.getElementById('sort').addEventListener('change', (e)=> {
+            window.location.href = '?sort='+e.target.value
+    })
+@endsection
 
 
 

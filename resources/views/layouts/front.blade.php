@@ -39,7 +39,7 @@
                     <a class="nav-link {{ Route::currentRouteName() === 'shop' ? 'active' : '' }}"  href="{{ route('shop') }}">Shop</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() === 'cart' ? 'active' : '' }}" href="{{route('cart') }}">Cart (0)</a>
+                    <a class="nav-link {{ Route::currentRouteName() === 'cart' ? 'active' : '' }}" href="{{route('cart.index') }}">Cart ({{ count(\Cart::getContent()) }})</a>
                   </li>
                     @if (Route::has('login'))
 
@@ -61,6 +61,17 @@
                             @endauth
 
                     @endif
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
                 </ul>
                 <form class="d-flex" role="search">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -83,7 +94,6 @@
 
 
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
 
           <script src="{{ asset('public/js/bootstrap5.bundle.js') }}"></script>
           <script src="{{ asset('public/js/jquery-3.6.4.min.js') }}"></script>

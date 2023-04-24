@@ -12,7 +12,6 @@
                     <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
                         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
-
                                 <a href="{{ route('slides.create') }}"><button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700">Creat Product</button></a>
 
                             <table class="w-full">
@@ -51,16 +50,6 @@
                                         @else
                                         <p>0 Slides</p>
                                         @endif
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                        <button type="button" class="btn btn-secondary">Secondary</button>
-                                        <button type="button" class="btn btn-success">Success</button>
-                                        <button type="button" class="btn btn-danger">Danger</button>
-                                        <button type="button" class="btn btn-warning">Warning</button>
-                                        <button type="button" class="btn btn-info">Info</button>
-                                        <button type="button" class="btn btn-light">Light</button>
-                                        <button type="button" class="btn btn-dark">Dark</button>
-
-                                        <button type="button" class="btn btn-link">Link</button>
                         </div>
                         </div>
                     </div>
