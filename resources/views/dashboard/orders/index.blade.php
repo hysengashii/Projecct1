@@ -1,13 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('orders') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+                @if (session('status'))
+                        <div class="alert alert-danger">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 <div class="table-responsive">
 
                     <table class="w-full">
@@ -43,7 +48,7 @@
                         </tbody>
                     </table>
                                      @else
-                                    <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50  dark:text-red-400" role="alert">
+                                    <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
                                         <span class="font-medium">0 Order!</span>
                                     </div>
                                     @endif

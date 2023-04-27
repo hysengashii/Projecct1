@@ -8,6 +8,11 @@
             <div class="container">
                 @if (count(Cart::getContent()) > 0)
                 <h3 class="mt-5">Cart</h3>
+                    @if (session('cart_status'))
+                        <div class="alert alert-danger">
+                            {{ session('cart_status') }}
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -42,6 +47,12 @@
                     {{-- checkout --}}
                     @auth
                         <h3 class="mt-5">Checkout</h3>
+                                @if (session('status'))
+                                    <div class="alert alert-danger">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -68,11 +79,11 @@
                                 <button type="submit" class="btn btn-outline-primary">Submit</button>
                         </form>
                     @endauth
-                @else
+            @else
                     <div class="alert alert-warning" role="alert">
                         Cart is empty!
                     </div>
-                @endif
+            @endif
 
                 @guest
                     @if (count(\Cart::getContent()) > 0 )

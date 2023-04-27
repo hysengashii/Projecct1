@@ -38,24 +38,21 @@ class CartController extends Controller
         $product->decrement('qty', 0);
 
         // Redirect back to the product page with a success message
-        return redirect()->route('home')->with('success', 'Product added to cart successfully!');
+        return redirect()->route('shop')->with('success', 'Product added to cart successfully!');
     }
 
 
 
     public function inc($item)
     {
-    //    \Cart::update($item,['quantity'=>1]);
-    //    return redirect()->back();
+    $product = Product::findOrFail($item);
+        $cart_item = \Cart::get($item);
 
-        $product = Product::findOrFail($item);
-            $cart_item = \Cart::get($item);
-
-            if($cart_item['quantity'] < $product->qty) {
-                \Cart::update($item, ['quantity' => 1]);
-                return redirect()->back();
-            } else {
-                return redirect()->back()->with('cart_status', 'We only have ' .$product->qty .' ' .$product->name .' in stock!');
+        if($cart_item['quantity'] < $product->qty) {
+            \Cart::update($item, ['quantity' => 1]);
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('cart_status', 'We only have ' .$product->qty .' ' .$product->name .' in stock!');
         }
     }
 
@@ -82,41 +79,47 @@ class CartController extends Controller
 
     public function checkout(Request $request) {
         // Validate the form data
-        $validatedData = $request->validate([
-            'fullname' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-        ]);
+   $validatedData = $request->validate([
+       'fullname' => 'required',
+       'email' => 'required|email',
+       'phone' => 'required',
+   ]);
 
-        $cartItems = \Cart::getContent(); // Get the cart items
-        $total = \Cart::getTotal(); // Get the total price of the cart
+   $cartItems = \Cart::getContent(); // Get the cart items
+   $total = \Cart::getTotal(); // Get the total price of the cart
 
-        // Create an order in the database
-        $order = new Order();
-        $order->fullname = $validatedData['fullname'];
-        $order->email = $validatedData['email'];
-        $order->phone = $validatedData['phone'];
-        $order->total = $total;
-        $order->user_id = auth()->user()->id; // Set the user_id column to the authenticated user's ID
-        $order->save();
+   // Create an order in the database
+   $order = new Order();
+   $order->fullname = $validatedData['fullname'];
+   $order->email = $validatedData['email'];
+   $order->phone = $validatedData['phone'];
+   $order->total = $total;
+   $order->user_id = auth()->user()->id; // Set the user_id column to the authenticated user's ID
+   $order->save();
 
+   foreach($cartItems as $item) {
+       $product = Product::findOrFail($item->id);
 
-        $pids = [];      // product id
+       // Check if the quantity in the cart is greater than the quantity in the database
+       if($item->quantity > $product->qty) {
+           return redirect()->route('cart.index')->with('status', "We're sorry, we don't have enough {$product->name} in stock,  we have just {$product->qty} QTY, not {$item->quantity}");
+       }
 
-        foreach(\Cart::getContent() as $item){
-            // update stock
-            $p = Product::find($item->id);
-            $p->qty -= $item->quantity;
-            $p->save();
-        }
+       // Update the stock
+       $product->qty -= $item->quantity;
+       $product->save();
 
-        // Clear the cart
-        \Cart::clear();
+       // Attach the product to the order
+       $order->products()->attach($product->id);
+   }
 
-        // Redirect the user to the thank you page
-        return redirect()->route('cart.index')->with('status', 'Order was created successfully');
-        
-    }
+   // Clear the cart
+   \Cart::clear();
+
+         // Redirect the user to the thank you page
+         return redirect()->route('cart.index')->with('status', 'Order was created successfully');
+   }
+
 
 
 }

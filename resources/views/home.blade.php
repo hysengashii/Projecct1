@@ -41,31 +41,41 @@
                 <h2 class="mx-auto text-center">Latest Product</h2>
                 <div class="row">
                     @if ($products && count($products) > 0)
-                        @foreach ($products as $product)
-                        <div class="col-lg-2 col-md-5 col-sm-12" >
-                            <div class="card">
-                                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" height="200px">
+                    @foreach ($products as $product)
+                        <div class="col-lg-2 col-md-5 col-sm-12">
+                            <div class="card @if($product->qty == 0) out-of-stock @endif">
+                                <a href="{{ route('products.show', $product) }}">
+                                    <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" height="200px"
+                                     class="rounded mx-auto d-block {{ $product->qty == 0 ? 'out-of-stock' : '' }} op">
+                                </a>
                                 <div class="card-body">
-                                <h5 class="text-center card-title">{{$product->name}}</h5>
-                                <div class="flow-root h-auto ">
-                                    <div class="h-auto my-4 text-center "><p class="card-text">{{$product->description}}</p></div>
+                                    <h5 class="text-center card-title">{{$product->name}}</h5>
+                                    <div class="flow-root h-auto">
+                                        <div class="h-auto my-4 text-center"><p class="card-text">{{$product->description}}</p></div>
+                                    </div>
+                                    <div class="flow-root h-auto">
+                                        <div class="h-auto my-4 text-center"><b class="card-text">{{ number_format($product->price,2) }}$</b></div>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="{{ route('products.show', $product) }}" class="btn btn-primary">View Product</a>
+                                    </div>
                                 </div>
-                                <div class="flow-root h-auto">
-                                    <div class="h-auto my-4 text-center"><b class="card-text">{{ number_format($product->price,2) }}$</b></div>
-                                </div>
-
-                                <div class="text-center ">
-                                    <a href="{{ route('products.show', $product) }}" class="btn btn-primary ">View Productt</a>
-                                </div>
-                                </div>
+                                @if ($product->qty == 0)
+                                    <div class="out-of-stock-overlay">
+                                        <span class="out-of-stock-text">Out of stock</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                        @endforeach
-                            @else
-                            <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
-                                <span class="font-medium">0 Product!</span>
-                            </div>
-                    @endif
+                    @endforeach
+                    <div class="mt-4 d-flex align-items-center justify-content-center pagination">
+                        {{ $products->links('pagination::bootstrap-4') }}
+                    </div>
+                @else
+                    <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
+                        <span class="font-medium">0 Product!</span>
+                    </div>
+                @endif
                 </div>
             </div>
         </section>

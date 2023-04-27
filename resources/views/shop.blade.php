@@ -32,31 +32,37 @@
             <div class="container">
                 <h2 class="mx-auto text-center">Latest Product</h2>
                 <div class="row">
+                   <!-- shop.blade.php -->
+                    <!-- shop.blade.php -->
                     @if ($products && count($products) > 0)
                         @foreach ($products as $product)
-                        <div class="col-lg-2 col-md-5 col-sm-12" >
-                            <div class="card">
-                                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" height="200px">
-                                <div class="card-body">
-                                <h5 class="text-center card-title">{{$product->name}}</h5>
-                                <div class="flow-root h-auto ">
-                                    <div class="h-auto my-4 text-center "><p class="card-text">{{$product->description}}</p></div>
-                                </div>
-                                <div class="flow-root h-auto">
-                                    <div class="h-auto my-4 text-center"><b class="card-text">{{ number_format($product->price,2) }}$</b></div>
-                                </div>
+                            <div class="col-lg-4 col-md-5 col-sm-12">
+                                <div class="mt-4 card op">
+                                    <a href="{{ route('products.show', $product)}}">
+                                        <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" height="200px"
+                                        class="rounded mx-auto d-block {{ $product->qty == 0 ? 'out-of-stock' : '' }} op">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="text-center card-title">{{ $product->name }}</h5>
+                                        <div class="flow-root h-auto">
+                                            <div class="h-auto my-4 text-center"><b class="card-text">{{ number_format($product->price, 2) }}$</b></div>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="{{ route('products.show', $product) }}" class="btn btn-primary">View Product</a>
+                                            <a href="{{ route('cart.add', ['product' => $product->id, 'qty' => 1]) }}" class="btn btn-danger {{ $product->qty == 0 ? 'disabled' : '' }}">Add to Cart</a>
 
-                                <div class="text-center ">
-                                    <a href="{{ route('products.show', $product)}}" class="btn btn-primary ">View Productt</a>
-                                </div>
+                                        </div>
+                                    </div>
+                                    @if ($product->qty == 0)
+                                        <div class="out-of-stock-label">Out of Stock</div>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
                         @endforeach
-                            @else
-                            <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
-                                <span class="font-medium">0 Product!</span>
-                            </div>
+                    @else
+                        <div class="p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
+                            <span class="font-medium">0 Product!</span>
+                        </div>
                     @endif
                 </div>
 
@@ -68,11 +74,7 @@
 @endsection
 
 
-@section('js')
-        document.getElementById('sort').addEventListener('change', (e)=> {
-            window.location.href = '?sort='+e.target.value
-    })
-@endsection
+
 
 
 

@@ -31,6 +31,7 @@ class ProductsController extends Controller
         return view('dashboard.products.create');
     }
 
+
     /**
      * Store a newly created resource in storage.
      *

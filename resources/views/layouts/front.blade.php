@@ -42,16 +42,30 @@
                     <a class="nav-link {{ Route::currentRouteName() === 'cart' ? 'active' : '' }}" href="{{route('cart.index') }}">Cart ({{ count(\Cart::getContent()) }})</a>
                   </li>
                     @if (Route::has('login'))
+                             @auth  {{-- nese eshte auth qite username edhe logout perndryshe shfaqe login register --}}
 
-                            @auth
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-                                </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ Auth::user()->name }}
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li >
+                                                <a class="dropdown-item {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    Logout
+                                                </a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </li>
                             @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/login') }}">Log In</a>
-                            </li>
-
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('/login') }}">Log In</a>
+                                    </li>
                                 @if (Route::has('register'))
 
                                     <li class="nav-item">
@@ -61,22 +75,13 @@
                             @endauth
 
                     @endif
-                <div class="dropdown show">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                @if(request()->path() != 'shop')
+                    <div class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" id="header-search" placeholder="Search" aria-label="Search">
+                    </div>
+                @endif
+
               </div>
             </div>
           </nav>
@@ -99,11 +104,9 @@
           <script src="{{ asset('public/js/jquery-3.6.4.min.js') }}"></script>
 
 
-         <script>
-             @yield('js')
+        <script src="js/script.js">
+            // @yield('js')
+
         </script>
-
-
-
-              </body>
-          </html>
+    </body>
+</html>
