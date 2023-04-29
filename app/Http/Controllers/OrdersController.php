@@ -15,7 +15,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->hasRole('admin')) {  // e bojm nese nuk osht auth si admin mos ti sheh orderat perndryshe le ti sheh vetem orderat e vete
+        if (!Auth::user()->hasRole('admin')) {  // e bojm nese nuk osht auth si admin mos ti sheh orderat perndryshe le ti sheh vetem orderat e veta
             $orders = Order::where('user_id', Auth::id())->get();
         } else {
             $orders = Order::all();
