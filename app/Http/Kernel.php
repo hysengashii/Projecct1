@@ -64,6 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,  // shtimi per role nese nuk osht admin mos me shfaqe order...
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,  // shtimi per role, nese nuk osht admin useri mos me ja shfaqe order,product ne dashboard...
     ];
 }
