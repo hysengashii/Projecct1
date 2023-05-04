@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -57,7 +58,8 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        $product = Product::find($id);
+        return view('view-product', ['product' => $product]);
     }
 
     /**
@@ -68,7 +70,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        return view('comments.edit', compact('comment'));
+       //
     }
 
     /**
@@ -84,9 +86,12 @@ class CommentController extends Controller
             'content' => 'required',
         ]);
 
-        $comment->update($validated);
+        if ($comment->user_id == auth()->id()) {
+            $comment->update($validated);
+            return back();
+        }
 
-        return redirect()->route('comments.store', $comment->id)->with('success', 'Comment updated successfully.');
+        return response()->json(['error' => 'You are not authorized to update this comment.']);
     }
 
     /**

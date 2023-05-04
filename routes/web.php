@@ -63,7 +63,10 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comments.show');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('/comments/{comment}', [CommentController::class, 'update']);
 
+Route::resource('/comment', CommentController::class);
 
 
 

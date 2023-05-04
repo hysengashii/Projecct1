@@ -102,11 +102,9 @@
 
           <script src="{{ asset('public/js/bootstrap5.bundle.js') }}"></script>
           <script src="{{ asset('public/js/jquery-3.6.4.min.js') }}"></script>
+          @yield('scripts')
 
 
-        <script src="js/script.js">
-            // @yield('js')
 
-        </script>
     </body>
 </html>
