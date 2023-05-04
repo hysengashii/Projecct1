@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\SlidesController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -58,6 +59,13 @@ Route::middleware('role:admin')->group(function () {
 });
 // Routes for all users (customers and admins)
 Route::get('products/{product}', [ProductsController::class, 'show'])->name('products.show');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comments.show');
+
+
+
 
 Route::resource('orders', OrdersController::class)->only(['index','destroy']);
 
