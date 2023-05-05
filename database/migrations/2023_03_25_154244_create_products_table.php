@@ -21,6 +21,8 @@ return new class extends Migration
             $table->float('price', 10,2);
             $table->text('description')->nullable();
             $table->string('image')->default('no-image.jpg');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
